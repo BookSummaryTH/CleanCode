@@ -216,3 +216,17 @@ Complex fulcrumPoint = new Complex(23.0);
 
 ## Don't Be Cute
 
+ถ้าชื่อฉลาดเกินไป พวกเขาจะจำได้เฉพาะคนที่เข้าใจเจ้าของ sense
+
+`HolyHandGrenade` ควรจะทำอะไร ?  it's cute  แต่บางครั้งในกรณีนี้
+
+`DeleteItems` might be a better name.
+
+Choose clarity over entertainment value.
+
+ความน่ารักในรหัสจะปรากฎในรูปแบบของ ภาษาพูดหรือคำแสลง ตัวอย่างเช่น 
+
+อย่าใช้ชื่อ `whack()`,  to mean `kill()`
+
+## Pick One Word per Concept 
+
