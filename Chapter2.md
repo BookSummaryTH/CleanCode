@@ -228,5 +228,100 @@ Choose clarity over entertainment value.
 
 อย่าใช้ชื่อ `whack()`,  to mean `kill()`
 
-## Pick One Word per Concept 
+## Pick One Word per Concept
 
+เลือกหนึ่งคำสำหรับแนวคิด abstract และ stick มัน ตัวอย่างเช่น มันทำให้สับสนถ้ามี `fetch, retrieve, get`  ใน class ที่แตกต่าง
+
+คุณจะจำ method name ใดๆ ด้วย class ใดๆ
+
+ในทำนองเดียวกันมันจะทำให้สับสนถ้ามี `controller, manager, driver` in the same code base 
+
+ความแตกต่างที่สำคัญระหว่าง `DeviceManager` and `ProtocalController`  
+
+ทำไมทั้งสองไม่ใช้ `controller` or `manager` ให้เหมือนกัน ชื่อจะบอกถึงประเภทที่แตกต่างและคลาสที่แตกต่าง
+
+## Don't Pun
+
+หลีกเลี่ยงการใช้คำเดียวกันเพื่อวัตถุประสงค์สองประการ คุณสามารถมี  `add` method อยู่ในหลายๆ class  
+
+ตราบเท่าที่ return และ parameter แตกต่างมันก็ยังดูดี
+
+อย่างไรก็ตามต้องตัดสินใจใช้ `add` for _consistency_  (ความสม่ำเสมอ สอดคล้อง)
+
+สมมุติเรามีหลายๆ class ทีมี `add` ที่มี single parameter  ใน class อื่นๆ เราควรจะใช้ชื่อว่า `insert` ,
+ `append`    การทำแบบนี้ทำให้เราสับสนเพราะวัตถุประสงค์เดียวกันแต่คำแตกต่าง
+
+จุดมุ่งหมายของผู้เขียนคือทำให้ code เข้าใจง่ายที่สุด เราต้องการให้อ่านได้อย่างรวดเร็ว ไม่ใช้การใช้คำจากวิจัย paper
+
+## Add MeaningFul Context  เพิ่มความหมายให้มันชัดเจน
+
+มีไม่กี่ชื่อที่มีความหมายในตัวเอง ลองจิตนการคุณมีตัวแปร `firstName`, `lastName`, `street`,
+
+`houseNumber`, `city`, `state`, `zipcode`  เมื่อรวมเข้าด้วยกันมันคือ  _ที่อยู่_  
+
+แต่ถ้าคุณเห็น `state` alone อยู่ใน method  คุณจะมโนว่ามันเป็น  _ที่อยู่_   หรือไม่
+
+คุณสามารถเพิ่ม prefixes  `addFirstName`, `addLastName`, `addState`
+
+อย่างน้อยคนอ่านก็เข้าใจตัวแปรในโครงสร้างที่ใหญ่  แน่นอนถ้าคุณสร้าง class  `Address`
+
+```C++
+private void printGuessStatistics(char candidate, int count) {
+    String number;
+    String verb;
+    String pluralModifier;
+    if (count == 0) {
+        number = "no";
+        verb = "are";
+        pluralModifier = "s";
+    } else if (count == 1) {
+        number = "1";
+        verb = "is";
+        pluralModifier = "";
+    } else {
+        number = Integer.toString(count);
+        verb = "are";
+        pluralModifier = "s";
+    }
+    String guessMessage = String.format("There %s %s %s%s", 
+    verb, number, candidate, pluralModifier);
+    print(guessMessage);
+ }
+```
+
+function นี้ยาวเกินไปและใช้ตัวแปรตลอด เพื่อให้มันเล็กลงสร้าง `GuessStatisticsMessage` class
+
+```C++
+public class GuessStatisticsMessage {
+    private String number;
+    private String verb;
+    private String pluralModifier;
+    public String make(char candidate, int count) {
+        createPluralDependentMessageParts(count);
+        return String.format("There %s %s %s%s",verb, number, candidate, pluralModifier );
+    }
+    private void createPluralDependentMessageParts(int count) {
+        if (count == 0) {
+            thereAreNoLetters();
+        } else if (count == 1) {
+            thereIsOneLetter();
+        } else {
+            thereAreManyLetters(count);
+        }
+    }
+    private void thereAreManyLetters(int count) {
+        number = Integer.toString(count);
+        verb = "are";
+        pluralModifier = "s";
+    }
+    private void thereIsOneLetter() {
+        number = "1";
+        verb = "is";
+        pluralModifier = "";
+    }
+    private void thereAreNoLetters() {
+        number = "no";
+        verb = "are";
+        pluralModifier = "s";
+ }
+```
